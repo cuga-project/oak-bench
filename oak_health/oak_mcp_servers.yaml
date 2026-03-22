@@ -1,0 +1,5 @@
+# OpenAPI direct integration
+services:
+  - oak_health_insurance:
+      url: http://127.0.0.1:8090/openapi.json
+      description: Oak Health Insurance application will let you observe claims, coverages and plans, benefits, care suggestions,specialties, general medical information, and other billing and profile information.

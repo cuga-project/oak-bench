@@ -1,0 +1,31 @@
+[project]
+name = "cuga-evaluation"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic",
+    "loguru",
+    "cuga",
+    "cugaviz",
+    "rapidfuzz",
+    "python-dotenv>=1.0.0",
+    "pyarrow>=23.0.0",
+]
+
+[tool.uv.sources]
+cuga = { path = "../cuga-agent", editable = true }
+
+
+[project.scripts]
+cuga = "cuga.cli:app"
+
+[dependency-groups]
+
+groq = [
+    "langchain-groq>=0.3.8",
+]
+
+sandbox = [
+    "llm-sandbox>=0.1.3",
+]

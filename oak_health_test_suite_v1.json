@@ -1,0 +1,1111 @@
+[
+  {
+    "name": "oak-health-insurance",
+    "user_info":["member_id:121231234", "location:[stateCode:NY, zipCode:11211]", "current_date:2025-12-31"],
+    "test_cases": [
+      {
+        "name": "approved_claims",
+        "description": "Get all my 2025 approved claims",
+        "intent": "Get all my 2025 approved claims",
+        "difficulty": "easy",
+        "expected_output": {
+          "response": "You have 4 approved claims for 2025. Here are their claim IDs and dates:\n\nClaim ID: 2025034AA5006, Date: 2025-03-01\nClaim ID: 2025034AA5005, Date: 2025-02-25\nClaim ID: 2025034AA5001, Date: 2025-02-10\nClaim ID: 2025034AA1251, Date: 2025-02-02",
+          "keywords": [
+            "2025034AA5006",
+            "2025034AA5005",
+            "2025034AA5001",
+            "2025034AA1251"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_member_claims_get_member_claims_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "claims_from_period",
+        "description": "Show all my claims from March 2025",
+        "intent": "Show all my claims from March 2025",
+        "difficulty": "easy",
+        "expected_output": {
+          "response": "Here are all your claims from March 2025:\n\nClaim ID: 2025034AA5008\n\nStatus: Processing\nStart Date: 2025-03-10\nAllowed Amount: $55.00\nPaid Amount: $44.00\nYour Responsibility: $11.00\nClaim ID: 2025034AA5007\n\nStatus: Denied\nStart Date: 2025-03-05\nAllowed Amount: $80.00\nPaid Amount: $0.00\nYour Responsibility: $80.00\nClaim ID: 2025034AA5006\n\nStatus: Approved\nStart Date: 2025-03-01\nAllowed Amount: $120.00\nPaid Amount: $96.00\nYour Responsibility: $24.00",
+          "keywords": [
+            "2025034AA5006",
+            "2025034AA5007",
+            "2025034AA5008"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_member_claims_get_member_claims_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "last_claims",
+        "description": "What is the status of my latest claim",
+        "intent": "What is the status of my latest claim",
+        "difficulty": "easy",
+        "expected_output": {
+          "response": "Your latest claim status is: Pending.",
+          "keywords": [
+            "Pending"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_member_claims_get_member_claims_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "claims_eob_pdf",
+        "description": "Show my last 3 approved claims and share the URL of any EOB PDF.",
+        "intent": "Show my last 3 approved claims and download any EOB PDF",
+        "difficulty": "medium",
+        "complexity": ["output_schema", "pagination"],
+        "expected_output": {
+          "response": "Your last 3 approved claims:\n\nClaim ID: 2025034AA5005\nEOB PDF: Available at https://example.health/eob/EOB-7E2F1B4C.pdf \n\nClaim ID: 2025034AA5006\nEOB PDF: Available at https://example.health/eob/EOB-9C0C8Q1A.pdf \n\nClaim ID: 2025034AA5001\nEOB PDF: Available at https://example.health/eob/EOB-9C0C8D7A.pdf",
+          "keywords": [
+            "2025034AA5005",
+            "2025034AA5006",
+            "2025034AA5001"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_member_claims_get_member_claims_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_get_claim_eob_pdf_get_claim_eob_pdf_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "family_member_claim",
+        "description": "Was my daughter Sara's latest claim approved?",
+        "intent": "Was my daughter Sara's latest claim approved?",
+        "difficulty": "medium",
+        "expected_output": {
+          "response": "Sara's latest claim is still pending and has not yet been approved.",
+          "keywords": [
+            "pending"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_coverage_period_get_coverage_period_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_get_member_claims_get_member_claims_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Claim_denial_reason",
+        "description": "Why was claim id 2025034AA5007 denied? Also, show me its details",
+        "intent": "Why was claim id 2025034AA5007 denied? Also, show me its details",
+        "difficulty": "easy",
+        "expected_output": {
+          "response": "The claim with ID 2025034AA5007 was denied. Common reasons are that the claim was received twice, or the service performed is not covered under your plan.\n\nHere are the details for claim 2025034AA5007:\n\nClaim UID: 9C0C8D7A6B5A4899BC12EF3344CDA456\nClaim Reference ID: REF9C0C8D7A6B5A4899BC12EF3344CDA456\nClaim Class: Medical Claim\nClaim Type: Professional Claim\nStatus: Denied\nClaim Start Date: 2025-03-05\nClaim End Date: 2025-03-05\nReceived Date: 2025-03-06\nProcessed Date: 2025-03-07\nPatient: JOHN DOE (DOB: 1970-02-13)\nAmounts:\nAllowed Amount: $80.00\nMember Responsibility: $80.00\nNot Covered Amount: $80.00\nPaid Amount: $0.00\nTotal Charge Amount: $80.00\nProcedure Code: 99213\nDiagnosis Code: Z00.00",
+          "keywords": [
+            "twice",
+            "not covered"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_member_claims_get_member_claims_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_get_claim_details_get_claim_details_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "number_of_claims",
+        "description": "How many claims I opened since April 2025",
+        "intent": "How many claims I opened since April 2025",
+        "difficulty": "easy",
+        "expected_output": {
+          "response": "You have opened 1 claim since last April.",
+          "keywords": [
+            "1"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_member_claims_get_member_claims_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "active_plan_members",
+        "description": "Show my active plan details and covered members",
+        "intent": "Show my active plan details, dates, and covered members",
+        "difficulty": "medium",
+        "expected_output": {
+          "response": "Your active plan is \"Acme Standard PPO\" (coverage period: 2025-01-01 to 2025-12-31).\n\nCovered members:\n\nJOHN DOE (Subscriber, DOB: 1970-02-13)\nSARA DOE (Child, DOB: 2008-06-10)\nTOM DOE (Child, DOB: 2012-09-15)",
+          "keywords": [
+            "2025",
+            "JOHN DOE|JOHN|DOE",
+            "SARA DOE|SARA|DOE",
+            "TOM DOE|TOM|DOE"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_coverage_period_get_coverage_period_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "care_providers_mri",
+        "description": "Find in-network care providers near me for an MRI scan",
+        "intent": "Find in-network care providers near me for an MRI scan",
+        "difficulty": "hard",
+        "expected_output": {
+          "response": "Sophia Ramirez, Vista Radiology Center: Suite 200, 500 Imaging Blvd, Queens, NY",
+          "keywords": [
+            "Sophia Ramirez"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_coverage_period_get_coverage_period_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_find_care_suggestions_find_care_suggestions_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_find_care_specialty_find_care_specialty_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "knee_surgery_providers",
+        "description": "Find knee surgeons nearby (and their phone numbers) and what are my benefits",
+        "intent": "Find knee surgeons nearby (and their phone numbers) and what are my benefits",
+        "difficulty": "hard",
+        "expected_output": {
+          "response": "I found a surgeon:\n\nLiam Bennett: Northside Orthopedic Group, 250 Ortho Park, New York. Phone number:+1-212-555-0303  \n\nFor knee surgery (outpatient), your benefits are:\n\nIn Network: Deductible applies, then you pay 20% coinsurance after deductible. Precertification is required.\nOut of Network: Deductible applies, then you pay 40% coinsurance after deductible. Precertification is required.",
+          "keywords": [
+            "Liam Bennett",
+            "+1-212-555-0303|+1‑212‑555‑0303",
+            "20%|20 %|20  %",
+            "40%|40 %|40  %"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_coverage_period_get_coverage_period_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_find_care_suggestions_find_care_suggestions_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_find_care_specialty_find_care_specialty_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_search_benefits_search_benefits_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "deductibles_oop",
+        "description": "What's my plan deductibles, OOP and Coinsurance",
+        "intent": "What's my plan deductibles, OOP and Copays",
+        "difficulty": "medium",
+        "expected_output": {
+          "response": "Your 2025 plan coverages:\n\nIn-Network Individual Deductible: $250 \nIn-Network Individual Out-of-Pocket: $1500\nIn-Network Individual Specialist Copay: $45\nIn-Network Individual Urgent Care Copay: $75\nIn-Network Family Deductible: $500 \nIn-Network Family Out-of-Pocket: $3000\n",
+          "keywords": [
+            "250|$250",
+            "1500|1,500|$1500|$1,500",
+            "45|$45|45$",
+            "75|$75|75$",
+            "500|$500",
+            "3000|3,000|$3000|$3,000"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_coverage_period_get_coverage_period_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_get_plan_information_get_plan_information_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "ded_oop_accumulators",
+        "description": "How much of my covered In-Network deductibles and out-of-pocket are met so far?",
+        "intent": "How much of my covered deductibles and out-of-pocket are met so far?",
+        "difficulty": "easy",
+        "expected_output": {
+          "response": "Here is a summary of your 2025 accumulators:\n\nIndividual In-Network Deductible: $250 met of $1,000 limit\nFamily In-Network Deductible: $700 met of $3,000 limit\nIndividual In-Network Out-of-Pocket: $400 met of $3,000 limit\nFamily In-Network Out-of-Pocket: $1,200 met of $6,000 limit",
+          "keywords": [
+            "250",
+            "1000|1,000",
+            "700",
+            "3000|3,000",
+            "400",
+            "1200|1,200",
+            "6000|6,000"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_coverage_period_get_coverage_period_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_get_benefit_accumulators_get_benefit_accumulators_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "pcp_near_me",
+        "description": "Find me all primary care doctors near me in 20 miles",
+        "intent": "Find me all primary care doctors near me in 20 miles",
+        "difficulty": "hard",
+        "expected_output": {
+          "response": "Ethan Cole. Acme Primary Care Clinic, 100 Wellness Way, Brooklyn, NY 11211\nOlivia Carter. Harbor Community Health, 75 Harbor St, Brooklyn, NY 11217\nNoah Sullivan. Greenpoint Family Practice, 101 Green Ave, Brooklyn, NY 11222\nAva Thompson. Bedford Primary Care, 202 Bedford Ave, Brooklyn, NY 11249\nMason Brooks. Cobble Hill Medical Group, 303 Court St, Suite 2, Brooklyn, NY 11231\nIsabella Hayes. Brooklyn Heights Family Health, 88 Montague St, Brooklyn, NY 11201\nLucas Parker. Williamsburg Family Medicine, 120 Havemeyer St, Brooklyn, NY 11211\nCharlotte Reed. Park Slope Primary Care, 400 7th Ave, Brooklyn, NY 11215\nJames Foster. Prospect Heights Family Care, 55 Vanderbilt Ave, Brooklyn, NY 11238\nAmelia Collins. Downtown Brooklyn Health, 2 MetroTech Center, Brooklyn, NY 11201\nHenry Mitchell. Fort Greene Family Practice, 141 Greene Ave, Brooklyn, NY 11238\nEmily Sanders. Clinton Hill Primary Care, 85 Waverly Ave, Brooklyn, NY 11205\nAlexander Ward. Sunset Park Family Health, 800 5th Ave, Brooklyn, NY 11232\nGrace Morgan. Bushwick Primary Care, 900 Bushwick Ave, Brooklyn, NY 11221",
+          "keywords": [
+            "Ethan Cole",
+            "Olivia Carter",
+            "Noah Sullivan",
+            "Ava Thompson",
+            "Mason Brooks",
+            "Isabella Hayes",
+            "Lucas Parker",
+            "Charlotte Reed",
+            "James Foster",
+            "Amelia Collins",
+            "Henry Mitchell",
+            "Emily Sanders",
+            "Alexander Ward",
+            "Grace Morgan"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_coverage_period_get_coverage_period_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_find_care_suggestions_find_care_suggestions_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_find_care_specialty_find_care_specialty_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "pcp_accept_new_patients",
+        "description": "Find all primary care doctors near me that accept new patients.",
+        "intent": "Find all primary care doctors near me that accept new patients.",
+        "difficulty": "hard",
+        "expected_output": {
+          "response": "Noah Sullivan. Greenpoint Family Practice, 101 Green Ave, Brooklyn, NY 11222\nAva Thompson. Bedford Primary Care, 202 Bedford Ave, Brooklyn, NY 11249\nLucas Parker. Williamsburg Family Medicine, 120 Havemeyer St, Brooklyn, NY 11211\nCharlotte Reed. Park Slope Primary Care, 400 7th Ave, Brooklyn, NY 11215\nJames Foster. Prospect Heights Family Care, 55 Vanderbilt Ave, Brooklyn, NY 11238",
+          "keywords": [
+            "Noah Sullivan",
+            "Ava Thompson",
+            "Lucas Parker",
+            "Charlotte Reed",
+            "James Foster"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_coverage_period_get_coverage_period_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_find_care_suggestions_find_care_suggestions_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_find_care_specialty_find_care_specialty_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "pcp_language",
+        "description": "Find all Spanish speaking primary care doctors near me.",
+        "intent": "Find all Spanish speaking primary care doctors near me.",
+        "difficulty": "hard",
+        "expected_output": {
+          "response": "Thank you for your request. Currently, I do not have information about which providers speak Spanish.",
+          "keywords": ["do not|don't|dont|does not"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_coverage_period_get_coverage_period_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_find_care_suggestions_find_care_suggestions_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_find_care_specialty_find_care_specialty_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "benefits_knee_surgery",
+        "description": "What are my benefits for knee injury and show the details.",
+        "intent": "What are my benefits for knee injury and show the details.",
+        "difficulty": "hard",
+        "expected_output": {
+          "response": "For a knee injury, your benefit details are:\n\nCategory: Emergency Care\nBenefit: Emergency - Emergency Room (Institutional)\nIn Network:\nCopayment: $400 per visit\nCoinsurance: 0%\nDeductible applies: Yes\nPrecertification required: No\nOut of Network:\nCovered at the In Network benefit level\nDiagnosis codes covered include S86.911A and T14.90XA.",
+          "keywords": [
+            "400|$400",
+            "0%|0 %"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_coverage_period_get_coverage_period_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_search_benefits_search_benefits_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_get_benefit_details_get_benefit_details_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "coverage_and_providers_mri_found_none",
+        "description": "What’s my MRI coverage and who can perform it in Boston, MA?",
+        "intent": "What’s my MRI coverage and who can perform it in Boston, MA?",
+        "difficulty": "hard",
+        "expected_output": {
+          "response": "No clinics found near Boston.\n\nHere is your coverage details:\nIn-Network:\n\nDeductible applies\nPrecertification required\nCost: 20% coinsurance, $0 copay\n\n\nOut-of-Network:\n\nDeductible applies\nNo precertification\nCost: 40% coinsurance.",
+          "keywords": [
+            "20%|20 %",
+            "40%|40 %"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_coverage_period_get_coverage_period_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_search_benefits_search_benefits_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_find_care_suggestions_find_care_suggestions_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_find_care_specialty_find_care_specialty_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "summary_inn_copay",
+        "description": "Summarize my plan co-payment for In-Network Specialist",
+        "intent": "Summarize my plan co-payment for In-Network Specialist",
+        "difficulty": "medium",
+        "expected_output": {
+          "response": "Your copay for In-Network Specialist is 45$ per visit",
+          "keywords": [
+            "$45|45|45$"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_coverage_period_get_coverage_period_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_get_plan_information_get_plan_information_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "medical_info_blood_pressure",
+        "description": "Give me information about high blood pressure.",
+        "intent": "Give me information about high blood pressure.",
+        "difficulty": "easy",
+        "expected_output": {
+          "response": "Here is information about high blood pressure (hypertension) from your health insurance app:\n\nHigh Blood Pressure: Overview\nWhat hypertension is and why it matters.\nhttps://example.health/articles/htn-overview\n\nHypertension Symptoms\nCommon and uncommon symptoms.\nhttps://example.health/articles/htn-symptoms\n\nCauses of High Blood Pressure\nGenetics, lifestyle, and other factors.\nhttps://example.health/articles/htn-causes\n\nDiagnosing Hypertension\nHow doctors measure and confirm hypertension.\nhttps://example.health/articles/htn-diagnosis\n\nTreatment Options for Hypertension\nMedications, diet, and exercise.\nhttps://example.health/articles/htn-treatment\n\nLifestyle Changes to Lower BP\nDietary patterns, sodium, and activity.\nhttps://example.health/articles/htn-lifestyle\n\nComplications of High Blood Pressure\nHeart disease, stroke, and kidney damage.\nhttps://example.health/articles/htn-complications\n\nMonitoring Your Blood Pressure at Home\nDevices and best practices.\nhttps://example.health/articles/htn-monitoring\n\nLet me know if you want details from any specific article.",
+          "keywords": [
+            "Hypertension Symptoms|high blood pressure symptoms|blood pressure symptoms",
+            "Treatment Options for Hypertension|treatment options|hypertension treatment|treating hypertension",
+            "Monitoring Your Blood Pressure at Home|monitoring blood pressure|blood pressure monitoring|at home|home monitoring|Diagnosing Hypertension|diagnosing|measure blood pressure"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_medical_information_get_medical_information_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "medical_info_diabetes",
+        "description": "How should I manage my diabetes?",
+        "intent": "How should I manage my diabetes?",
+        "difficulty": "easy",
+        "expected_output": {
+          "response": "Here are resources to help you manage your diabetes:\n\nDiabetes: Overview\nTypes 1 and 2, and prediabetes.\n\nDiabetes Symptoms\nCommon signs and when to see a doctor.\n\nManaging Diabetes\nMonitoring glucose, diet, and medications.\n\nComplications of Diabetes\nEyes, nerves, kidneys, and heart.\n\nExercise and Diabetes\nHow activity helps manage blood sugar.\n\nDiet for Diabetes\nCarbs, fiber, and meal planning.\n\nThese articles cover the essentials of diabetes management, including diet, exercise, monitoring, and recognizing complications.",
+          "keywords": [
+            "Complications of Diabetes|Complications",
+            "Diet for Diabetes|Diet"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_medical_information_get_medical_information_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "dependents_recent_claims",
+        "description": "Show my dependents, how many claims are under their names?",
+        "intent": "Show my dependents, how many claims are under their names?",
+        "difficulty": "medium",
+        "expected_output": {
+          "response": "Here are your dependents and the number of claims under their names:\n\nSARA DOE (2008-06-10): 2 claims\nTOM DOE (2012-09-15): 2 claims",
+          "keywords": [
+            "Sara",
+            "Tom"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_coverage_period_get_coverage_period_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_get_member_claims_get_member_claims_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "benefit_details_er",
+        "description": "Show my benefit details for emergency room in case of a knee injury.",
+        "intent": "Show my benefit details for emergency room in case of a knee injury.",
+        "difficulty": "hard",
+        "expected_output": {
+          "response": "Here are your benefit details for emergency room care in case of a knee injury:\n\nBenefit Name: Emergency - Emergency Room (Institutional)\nBenefit Type: Emergency - Emergency Room\nSpecialty Type: Institutional\nFor In Network (INN):\n\nDeductible Applies: Yes\nPrecertification Required: No\nCopayment: $400 Per Visit\nCoinsurance: 0%\nFor Out of Network (OON):\n\nDeductible Applies: Covered - At the INN benefit level\nPrecertification Required: No\nCopayment: Covered - At the INN benefit level\nCoinsurance: Covered - At the INN benefit level\nDiagnosis codes covered for knee injury include: S86.911A, T14.90XA",
+          "keywords": [
+            "400|$400",
+            "S86.911A",
+            "T14.90XA"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_coverage_period_get_coverage_period_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_search_benefits_search_benefits_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_get_benefit_details_get_benefit_details_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "out_of_pocket_coinsurance",
+        "description": "what is my OON Coinsurance for an MRI",
+        "intent": "what is my OON Coinsurance for an MRI",
+        "difficulty": "medium",
+        "expected_output": {
+          "response": "Your out of network coinsurance for an MRI is 40%.",
+          "keywords": [
+            "40%|40 %"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_coverage_period_get_coverage_period_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_search_benefits_search_benefits_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "sms_preferences",
+        "description": "Turn on SMS notifications and set language to en-uk. Also show my member profile ",
+        "intent": "Turn on SMS notifications and set language to en-uk. Also show my member profile",
+        "difficulty": "easy",
+        "expected_output": {
+          "response": "SMS notifications are now turned on and your language preference is set to en-uk.\n\nHere is your member profile:\n\nName: JOHN DOE\nDate of Birth: 1970-02-13\nMember UID: 375491185\nHealth Coverage ID: 868Y10397\nRelationship: SUBSCR (Subscriber)\nLanguage Preference: en-uk\nEmail Opt-In: True\nSMS Opt-In: True\nAccessibility: None\nPrimary Care Provider ID: PRV-0106",
+          "keywords": [
+            "Language: en-uk|Language: en‑uk|en-uk|en‑uk|Language Preference: en-uk",
+            "SMS notifications: turned on|SMS notifications: turned on (SMS Opt‑In: True)|SMS Opt-In: True|SMS notifications: Enabled|SMS notifications: **Enabled**",
+            "1970-02-13|1970‑02‑13|Date of birth: 1970‑02‑13|Date of Birth: 1970-02-13"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_set_member_preferences_set_member_preferences_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_get_member_profile_get_member_profile_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "my_accessibility_preferences",
+        "description": "Does my profile preferences reflect my accessibility needs?",
+        "intent": "Does my profile preferences reflect my accessibility needs?",
+        "difficulty": "easy",
+        "expected_output": {
+          "response": "Your profile preferences indicate that accessibility needs are set to \"True\".",
+          "keywords": [
+            "True"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_member_profile_get_member_profile_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "bills_overview",
+        "description": "What do I currently owe? and for which claims?",
+        "intent": "What do I currently owe? and for which claims?",
+        "difficulty": "easy",
+        "expected_output": {
+          "response": "You currently owe $90.00 for 2 claims:\n\nClaim ID 2025034AA2251: $10.00 due by 2025-03-15 (status: DUE)\nClaim ID 2025034AA5007: $80.00 due by 2025-04-10 (status: IN_COLLECTIONS)",
+          "keywords": [
+            "90|$90|90.00",
+            "2025034AA2251",
+            "2025034AA5007"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_member_billing_get_member_billing_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "pay_bills",
+        "description": "Pay the due payment for 2025034AA2251 claim id.",
+        "intent": "Pay the due payment for 2025034AA2251 claim id.",
+        "difficulty": "medium",
+        "expected_output": {
+          "response": "Your payment of $10.00 for claim ID 2025034AA2251 was successful. You can view your receipt at: https://example.health/payments/pi_8ef79de858fb4923aab13166/receipt",
+          "keywords": [
+            "10|$10|10.00"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_member_billing_get_member_billing_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_create_payment_intent_create_payment_intent_post",
+              "args": {
+              }
+            },
+            {
+              "name": "oak_health_insurance_confirm_payment_intent_confirm_payment_intent_post",
+              "args": {
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "specialist_copay_premier_ppo",
+        "description": "What is the specialist copay on the Oak Premier PPO plan?",
+        "intent": "What is the specialist copay on the Oak Premier PPO plan?",
+        "difficulty": "easy",
+        "expected_output": {
+          "response": "The specialist copay on the Oak Premier PPO (OAK-PPO-PREMIER-2025) is $50 per visit for in-network specialists.",
+          "keywords": [
+            "$50",
+            "specialist"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_list_plans_plans_get",
+              "args": {}
+            },
+            {
+              "name": "oak_health_insurance_get_plan_plans__plan_id__get",
+              "args": {
+                "plan_id": "OAK-PPO-PREMIER-2025"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "hsa_eligible_plans",
+        "description": "Find all plans that allow opening an HSA account",
+        "intent": "Which Oak plans let me open an HSA?",
+        "difficulty": "easy",
+        "expected_output": {
+          "response": "Only 1 Oak Health plan is HSA-eligible: the Oak HDHP (OAK-HDHP-2025). As a high-deductible health plan, it qualifies for a Health Savings Account. Note that FSA cannot be combined with an HSA, so the HDHP does not offer FSA. The other 6 plans are not HSA-eligible.",
+          "keywords": [
+            "HSA",
+            "2025",
+            "HDHP|High Deductible Health Plan"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_list_plans_plans_get",
+              "args": {
+                "hsa_eligible": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "compare_premier_ppo_vs_hdhp",
+        "description": "Compare Premier PPO and HDHP on key dimensions",
+        "intent": "Show me the key differences between the Premier PPO and the HDHP plans.",
+        "difficulty": "easy",
+        "expected_output": {
+          "response": "Key differences:\n\nOak Premier PPO ($650/mo): embedded $500 deductible, $4,000 OOP max, $50 specialist copay, out-of-network at 50% coinsurance, no HSA.\nOak HDHP ($280/mo): aggregate $1,600 individual / $3,200 family deductible, $5,000 OOP max, out-of-network at 40%, HSA-eligible, $0 telehealth pre-deductible.\n\nThe HDHP saves $370/mo but uses an aggregate deductible — meaning no family member gets coverage until the entire family pool is met.",
+          "keywords": [
+            "embedded",
+            "aggregate",
+            "HSA",
+            "$650",
+            "$280",
+            "$5000|$5,000",
+            "$4000|$4,000",
+            "PPO",
+            "PREMIER",
+            "2025",
+            "HDHP"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_compare_plans_plans_compare_get",
+              "args": {
+                "ids": "OAK-PPO-PREMIER-2025,OAK-HDHP-2025"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "current_plan_vs_hdhp_cost_comparison",
+        "description": "Compare member's current enrolled plan cost structure against the HDHP catalog plan",
+        "intent": "How does my current plan's cost structure compare to the HDHP? Which is cheaper for me?",
+        "difficulty": "medium",
+        "expected_output": {
+          "response": "Your current plan is a PPO with an embedded deductible. The Oak HDHP costs $280/mo (vs your current premium), has a higher $5,000 individual OOP max, and uses an aggregate family deductible of $3,200. If you are a low utilizer, the HDHP saves money on premiums and allows HSA contributions. If you have regular medical costs, your current PPO's lower OOP max and embedded deductible protect you better.",
+          "keywords": [
+            "PPO",
+            "HDHP",
+            "family",
+            "$5,000|$5000",
+            "$3,200|$3200",
+            "aggregate",
+            "HSA"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_coverage_period_get_coverage_period_post",
+              "args": {}
+            },
+            {
+              "name": "oak_health_insurance_get_plan_information_get_plan_information_post",
+              "args": {}
+            },
+            {
+              "name": "oak_health_insurance_get_plan_plans__plan_id__get",
+              "args": {
+                "plan_id": "OAK-HDHP-2025"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "member_mri_benefit_search",
+        "description": "Look up what the member's current plan covers for an MRI using the benefit search",
+        "intent": "What does my plan cover for an MRI?",
+        "difficulty": "medium",
+        "expected_output": {
+          "response": "Under your current plan, MRI (imaging) is covered in-network at 20% coinsurance after your deductible is met. Out-of-network MRI is covered at a higher coinsurance rate after the out-of-network deductible.",
+          "keywords": [
+            "MRI|imaging",
+            "coinsurance",
+            "20%|20 %"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_coverage_period_get_coverage_period_post",
+              "args": {}
+            },
+            {
+              "name": "oak_health_insurance_search_benefits_search_benefits_post",
+              "args": {
+                "inquiry_keyword": "mri"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "classic_hmo_provider_and_constraints",
+        "description": "Find providers in the Classic HMO network and explain the referral and OON constraints",
+        "intent": "If I switched to the Classic HMO, would I find a cardiologist near me in NY? Also, what's the difference with that plan?",
+        "difficulty": "medium",
+        "expected_output": {
+          "response": "The Classic HMO uses the ACME network. Cardiologists are available in the ACME network in NY (11211). However, the Classic HMO has two important constraints: (1) it requires a PCP referral before you can see any specialist, and (2) it has zero out-of-network coverage — any care outside the ACME network (except emergencies) is 100% your responsibility.",
+          "keywords": [
+            "referral|PCP",
+            "coverage",
+            "HMO",
+            "emergencies",
+            "network"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_plan_plans__plan_id__get",
+              "args": {
+                "plan_id": "OAK-HMO-CLASSIC-2025"
+              }
+            },
+            {
+              "name": "oak_health_insurance_get_coverage_period_get_coverage_period_post",
+              "args": {}
+            },
+            {
+              "name": "oak_health_insurance_find_care_specialty_find_care_specialty_post",
+              "args": {}
+            }
+          ]
+        }
+      },
+      {
+        "name": "deductible_accumulator_mid_year_switch",
+        "description": "Assess the financial impact of switching plans mid-year given existing deductible progress",
+        "intent": "I've already spent some money toward my deductible this year. Would it make financial sense to switch to the Premier PPO now?",
+        "difficulty": "medium",
+        "expected_output": {
+          "response": "You have met $250 of your current $1,000 in-network individual deductible, with $750 remaining. If you switch to the Oak Premier PPO (individual deductible: $500), your accumulated $250 resets to $0 on the new plan. You would need to spend $500 again before coverage kicks in — a net loss of the $250 you already paid. A mid-year switch is unlikely to be cost-effective unless your remaining medical needs for the year are minimal.",
+          "keywords": [
+            "$250",
+            "$750",
+            "$500",
+            "deductible",
+            "PPO",
+            "PREMIER"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_coverage_period_get_coverage_period_post",
+              "args": {}
+            },
+            {
+              "name": "oak_health_insurance_get_benefit_accumulators_get_benefit_accumulators_post",
+              "args": {}
+            },
+            {
+              "name": "oak_health_insurance_get_plan_plans__plan_id__get",
+              "args": {
+                "plan_id": "OAK-PPO-PREMIER-2025"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "annual_cost_projection_all_plans",
+        "description": "Project worst-case annual cost (premiums + full OOP max) across all 7 plans for a heavy healthcare user",
+        "intent": "I'm a heavy healthcare user. Which Oak Health plan gives me the lowest total annual cost — premiums plus what I'd pay out of pocket in a worst-case year?",
+        "difficulty": "hard",
+        "expected_output": {
+          "response": "For a worst-case year (hitting the OOP maximum), total annual cost = (monthly premium × 12) + individual OOP max:\n\n- HDHP: $3,360 + $5,000 = $8,360 (aggregate deductible; HSA savings can reduce this further)\n- Classic HMO: $4,200 + $5,000 = $9,200 (referrals required; no OON)\n- EPO Select: $4,800 + $6,000 = $10,800 (no OON)\n- Value HMO: $2,400 + $8,700 = $11,100 (cheapest premium but highest OOP exposure; aggregate deductible)\n- POS Flex: $6,000 + $5,500 = $11,500\n- Premier PPO: $7,800 + $4,000 = $11,800 (highest premium but lowest OOP max)\n- Standard PPO: $5,400 + $7,000 = $12,400\n\nFor a heavy user who will hit the OOP max, the HDHP has the lowest total. However, its aggregate deductible is risky for families — Premier PPO is the safest if you have dependents.",
+          "keywords": [
+            "OOP",
+            "annual|yearly",
+            "$8,360|$8360",
+            "HDHP"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_list_plans_plans_get",
+              "args": {}
+            },
+            {
+              "name": "oak_health_insurance_get_plan_plans__plan_id__get",
+              "args": { "plan_id": "OAK-PPO-PREMIER-2025" }
+            },
+            {
+              "name": "oak_health_insurance_get_plan_plans__plan_id__get",
+              "args": { "plan_id": "OAK-PPO-STANDARD-2025" }
+            },
+            {
+              "name": "oak_health_insurance_get_plan_plans__plan_id__get",
+              "args": { "plan_id": "OAK-HMO-CLASSIC-2025" }
+            },
+            {
+              "name": "oak_health_insurance_get_plan_plans__plan_id__get",
+              "args": { "plan_id": "OAK-HDHP-2025" }
+            },
+            {
+              "name": "oak_health_insurance_get_plan_plans__plan_id__get",
+              "args": { "plan_id": "OAK-EPO-SELECT-2025" }
+            },
+            {
+              "name": "oak_health_insurance_get_plan_plans__plan_id__get",
+              "args": { "plan_id": "OAK-POS-FLEX-2025" }
+            },
+            {
+              "name": "oak_health_insurance_get_plan_plans__plan_id__get",
+              "args": { "plan_id": "OAK-HMO-VALUE-2025" }
+            }
+          ]
+        }
+      },
+      {
+        "name": "family_plan_switch_heavy_users",
+        "description": "Recommend whether a heavy-use family should stay on PPO or switch to Value HMO, using accumulator data and catalog comparison",
+        "intent": "I have a family of 4 and we've been heavy healthcare users this year. Should I stay on my current PPO or switch to the Value HMO for next year?",
+        "difficulty": "hard",
+        "expected_output": {
+          "response": "For a family of 4 that uses healthcare heavily, switching to the Value HMO carries significant risk:\n\n1. Deductible structure: Your current PPO has an embedded deductible — each family member individually triggers coverage after their $500 deductible, regardless of what others have spent. The Value HMO uses an aggregate $4,000 deductible: no family member gets post-deductible coverage until all four members' claims collectively reach $4,000. One member's high-cost care could consume the entire pool.\n\n2. OOP max: The Value HMO individual OOP max is $8,700 (the ACA statutory maximum). Your current PPO has a lower ceiling.\n\n3. Jan 1 reset: All deductible progress resets at the start of the new plan year regardless of which plan you choose.\n\nRecommendation: For heavy healthcare users with dependents, the embedded PPO deductible structure is substantially safer. The $450/mo Value HMO savings become a liability in a high-utilization year.",
+          "keywords": [
+            "$4,000|$4000",
+            "$8,700|$8700",
+            "family",
+            "HMO"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_coverage_period_get_coverage_period_post",
+              "args": {}
+            },
+            {
+              "name": "oak_health_insurance_get_benefit_accumulators_get_benefit_accumulators_post",
+              "args": {}
+            },
+            {
+              "name": "oak_health_insurance_compare_plans_plans_compare_get",
+              "args": {
+                "ids": "OAK-PPO-PREMIER-2025,OAK-HMO-VALUE-2025"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "oon_travel_plan_switch",
+        "description": "Recommend the single best Oak plan for a member who frequently needs care out of state",
+        "intent": "I'm reviewing Oak plans during open enrollment. I travel frequently to California and sometimes need care there. Which Oak plan has the lowest out-of-network coinsurance rate, and what is the annual premium?",
+        "difficulty": "hard",
+        "expected_output": {
+          "response": "For frequent care in California, you need a plan with out-of-network (OON) coverage. Three Oak plans have no OON: Classic HMO, EPO Select, and Value HMO — any non-emergency care on those plans in California is 100% your cost.\n\nBest option: Oak POS Flex\n- OON coinsurance: 30% — lowest of any Oak plan (Standard PPO and HDHP both charge 40%; Premier PPO charges 50%)\n- Self-referral allowed OON — no referral needed before seeing a specialist in California\n- Annual premium: $6,000 ($500/month × 12)\n- Worst-case annual cost (premium + individual in-network OOP max): $6,000 + $5,500 = $11,500\n\nSwitch to the POS Flex for the lowest OON coinsurance and full self-referral flexibility when you need care out of state.",
+          "keywords": [
+            "POS|OAK-POS-FLEX|FLEX",
+            "30|30%|30 %",
+            "$6,000|$6000"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_list_plans_plans_get",
+              "args": {}
+            },
+            {
+              "name": "oak_health_insurance_compare_plans_plans_compare_get",
+              "args": {
+                "ids": "OAK-PPO-PREMIER-2025,OAK-PPO-STANDARD-2025,OAK-POS-FLEX-2025,OAK-HDHP-2025"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "hdhp_aggregate_family_deductible_trap",
+        "description": "Explain the aggregate vs embedded deductible structural trap for a family comparing HDHP to PPO, grounded in the member's actual accumulator data",
+        "intent": "The HDHP family deductible is $3,200 — that sounds lower than our PPO. Is it actually a trap?",
+        "difficulty": "hard",
+        "expected_output": {
+          "response": "Yes — this is a classic aggregate deductible trap.\n\nHDHP ($3,200 aggregate): All 4 family members' expenses pool toward one shared $3,200 limit. No individual gets post-deductible coverage until the pool is fully exhausted. If one child has a $3,200 hospitalization, they alone absorb the entire family deductible — leaving all other members unshielded.\n\nPremier PPO ($1,000 embedded): Each family member has their own $500 individual deductible cap. Once one person spends $500 in-network, their coverage kicks in regardless of what others have spent. The family aggregate ceiling is $1,000.\n\nYour current accumulators show each family member's deductible tracked independently — that is the embedded structure protecting each person separately.\n\nFor families with any member who has predictable medical costs (chronic condition, child with asthma, etc.), the embedded PPO is far safer — even though $3,200 nominally sounds lower than $1,000.",
+          "keywords": [
+            "$3,200|$3200",
+            "family",
+            "HDHP",
+            "PPO|PREMIER"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_coverage_period_get_coverage_period_post",
+              "args": {}
+            },
+            {
+              "name": "oak_health_insurance_get_benefit_accumulators_get_benefit_accumulators_post",
+              "args": {}
+            },
+            {
+              "name": "oak_health_insurance_compare_plans_plans_compare_get",
+              "args": {
+                "ids": "OAK-PPO-PREMIER-2025,OAK-HDHP-2025"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "family_claims_oop_analysis_and_plan_recommendation",
+        "description": "My family has had a lot of healthcare visits this year. Tell me: (1) the total out-of-pocket responsibility my entire family (me and my two children) incurred across all claims this year, broken down per member; (2) how that compares to our family in-network deductible and OOP accumulator progress; (3) which Oak catalog plan minimizes worst-case annual cost for a family, and would switching to the Oak HDHP actually save us money given the deductible structure; and (4) find primary care doctors near me who accept new patients for Tom's follow-up care.",
+        "intent": "My family has had a lot of healthcare visits this year. Tell me: (1) the total out-of-pocket responsibility my entire family (me and my two children) incurred across all claims this year, broken down per member; (2) how that compares to our family in-network deductible and OOP accumulator progress; (3) would switching to the Oak HDHP actually save us money given its deductible structure; and (4) find primary care doctors near me who accept new patients for Tom's follow-up care.",
+        "difficulty": "hard",
+        "expected_output": {
+          "response": "Family 2025 member responsibility from claims:\n\nJOHN DOE: $348.00\nSARA DOE: $60.00\nTOM DOE: $109.00\nFamily total: $517.00\n\nNote: Denied claim amounts where the service was not covered (e.g., claim AA5002: $150, AA5007: $80) are included in the patientShare totals above but do NOT count toward your OOP accumulator — non-covered amounts are excluded from OOP tracking.\n\nCurrent family in-network accumulator progress (official plan-year tracking):\nFamily Deductible: $700 met of $3,000 limit\nFamily Out-of-Pocket: $1,200 met of $6,000 limit\n\nOak HDHP analysis for a family:\nThe HDHP has the lowest premium ($820/mo family), but uses an AGGREGATE $3,200 family deductible. This means no family member receives post-deductible coverage until ALL family members' expenses collectively reach $3,200 — unlike your current PPO's embedded structure where each member's deductible is tracked independently. With 3 active family members each filing multiple claims, the aggregate structure is a significant financial risk.\n\nPrimary care doctors near you accepting new patients:\nNoah Sullivan — Greenpoint Family Practice, 101 Green Ave, Brooklyn, NY 11222\nAva Thompson — Bedford Primary Care, 202 Bedford Ave, Brooklyn, NY 11249\nLucas Parker — Williamsburg Family Medicine, 120 Havemeyer St, Brooklyn, NY 11211\nCharlotte Reed — Park Slope Primary Care, 400 7th Ave, Brooklyn, NY 11215\nJames Foster — Prospect Heights Family Care, 55 Vanderbilt Ave, Brooklyn, NY 11238",
+          "keywords": [
+            "517|$517",
+            "348|$348",
+            "109|$109",
+            "1,200|$1,200|1200",
+            "700|$700",
+            "3,200|$3200",
+            "aggregate",
+            "Noah Sullivan",
+            "Ava Thompson"
+          ],
+          "tool_calls": [
+            {
+              "name": "oak_health_insurance_get_coverage_period_get_coverage_period_post",
+              "args": {}
+            },
+            {
+              "name": "oak_health_insurance_get_member_claims_get_member_claims_post",
+              "args": {}
+            },
+            {
+              "name": "oak_health_insurance_get_benefit_accumulators_get_benefit_accumulators_post",
+              "args": {}
+            },
+            {
+              "name": "oak_health_insurance_list_plans_plans_get",
+              "args": {}
+            },
+            {
+              "name": "oak_health_insurance_get_plan_plans__plan_id__get",
+              "args": {
+                "plan_id": "OAK-HDHP-2025"
+              }
+            },
+            {
+              "name": "oak_health_insurance_find_care_suggestions_find_care_suggestions_post",
+              "args": {}
+            },
+            {
+              "name": "oak_health_insurance_find_care_specialty_find_care_specialty_post",
+              "args": {}
+            }
+          ]
+        }
+      }
+    ]
+  }
+]
