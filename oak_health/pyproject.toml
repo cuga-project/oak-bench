@@ -1,5 +1,5 @@
 [project]
-name = "oak-health-insurance"
+name = "cuga-oak-health"
 version = "1.3.0"
 description = "Oak Health Insurance FastAPI application and benchmark data"
 requires-python = ">=3.12"
