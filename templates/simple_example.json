@@ -1,0 +1,26 @@
+[
+  {
+    "name": "digital-sales",
+    "test_cases": [
+      {
+        "name": "test_get_top_account",
+        "description": "gets the top account by revenue",
+        "intent": "get my top account by revenue",
+        "expected_output": {
+          "response": "**Top Account by Revenue** - **Name:** Andromeda Inc. - **Revenue:** $9,700,000 - **Account ID:** acc_49",
+          "keywords": [
+            "Andromeda Inc.",
+            "9,700,000"
+          ],
+          "tool_calls": [
+            {
+              "name": "digital_sales_get_my_accounts_my_accounts_get",
+              "args": {
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+]
