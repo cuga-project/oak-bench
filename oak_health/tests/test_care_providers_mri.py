@@ -48,7 +48,7 @@ class TestCareProvidersMriFlow:
         contract_uid = active_entry["identifiers"]["contractUniqueId"]
         brand_code = active_entry["brand"]["identifier"]
 
-        assert contract_uid == "CONTRACT-UID-JOHN-1001"
+        assert contract_uid == "CONTRACT-UID-ALEX-1001"
         assert brand_code == "ACME"
 
     def test_step2_find_care_suggestions_for_mri(self, client):
@@ -98,7 +98,7 @@ class TestCareProvidersMriFlow:
             "/find_care_specialty",
             json=REQUEST_BODY,
             params={
-                "contract_uid": "CONTRACT-UID-JOHN-1001",
+                "contract_uid": "CONTRACT-UID-ALEX-1001",
                 "brand_code": "ACME",
                 "specialty_category_codes": ["75"],  # from Step 2 suggestions
                 "taxonomy_codes": ["261QR0200X"],  # from Step 2 suggestions

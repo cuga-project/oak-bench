@@ -240,12 +240,6 @@ class RelationshipCd(BaseModel):
     description: str
 
 
-class GenderCd(BaseModel):
-    code: str
-    name: str
-    description: str
-
-
 class PersonName(BaseModel):
     """Separated name components"""
 
@@ -271,7 +265,6 @@ class EnrolledPerson(BaseModel):
     productTypes: List[MetadataTriple]
     sequenceNumber: str
     primaryAccountId: str
-    gender: MetadataTriple
 
 
 class PeriodDates(BaseModel):

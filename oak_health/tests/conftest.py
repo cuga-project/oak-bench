@@ -16,49 +16,49 @@ def client():
 
 @pytest.fixture
 def john_member_id():
-    """Member ID for primary test user (JOHN DOE)."""
+    """Member ID for primary test user (ALEX RIVERA)."""
     return "121231234"
 
 
 @pytest.fixture
 def john_hc_id():
-    """Healthcare ID for primary test user (JOHN DOE)."""
+    """Healthcare ID for primary test user (ALEX RIVERA)."""
     return "868Y10397"
 
 
 @pytest.fixture
 def jane_member_id():
-    """Member ID for secondary test user (JANE DOE)."""
+    """Member ID for secondary test user (JANE RIVERA)."""
     return "882771300"
 
 
 @pytest.fixture
 def jane_hc_id():
-    """Healthcare ID for secondary test user (JANE DOE)."""
+    """Healthcare ID for secondary test user (JANE RIVERA)."""
     return "441Z22001"
 
 
 @pytest.fixture
 def sara_member_id():
-    """Member ID for dependent (SARA DOE - JOHN's child)."""
+    """Member ID for dependent (SARA RIVERA - ALEX's child)."""
     return "121231235"
 
 
 @pytest.fixture
 def tom_member_id():
-    """Member ID for dependent (TOM DOE - JOHN's child)."""
+    """Member ID for dependent (TOM RIVERA - ALEX's child)."""
     return "121231236"
 
 
 @pytest.fixture
 def john_coverage_key_2025():
-    """Active coverage key for JOHN (2025)."""
+    """Active coverage key for ALEX (2025)."""
     return "1J1U-20250101-20251231-MED-57AMFC"
 
 
 @pytest.fixture
 def john_coverage_key_2024():
-    """Inactive coverage key for JOHN (2024)."""
+    """Inactive coverage key for ALEX (2024)."""
     return "1J1U-20240101-20241231-MED-OLDPPO"
 
 
@@ -70,8 +70,8 @@ def jane_coverage_key_2025():
 
 @pytest.fixture
 def john_contract_uid():
-    """Contract UID for JOHN."""
-    return "CONTRACT-UID-JOHN-1001"
+    """Contract UID for ALEX."""
+    return "CONTRACT-UID-ALEX-1001"
 
 
 @pytest.fixture
@@ -82,7 +82,7 @@ def jane_contract_uid():
 
 @pytest.fixture
 def john_location():
-    """Location data for JOHN (Brooklyn, NY). stateCode is the US state abbreviation."""
+    """Location data for ALEX (Brooklyn, NY). stateCode is the US state abbreviation."""
     return {"stateCode": "NY", "zipCode": "11211"}
 
 

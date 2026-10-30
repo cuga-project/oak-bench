@@ -349,7 +349,7 @@ class TestConfirmPaymentIntent:
         self, client, basic_request_body, jane_member_id
     ):
         """Test Case 4: Cannot confirm another member's intent."""
-        # Create intent as JOHN
+        # Create intent as ALEX
         create_response = client.post(
             "/create_payment_intent",
             json=basic_request_body,

@@ -3,7 +3,7 @@ Benchmark Scenario Tests for Oak Health Insurance API
 Covers all 35 intents from oak_health_test_suite_v1.json
 
 Member context used throughout:
-  member_id = 121231234  (JOHN DOE)
+  member_id = 121231234  (ALEX RIVERA)
   location  = NY / 11211
   current_date = 2025-12-31
 
@@ -30,7 +30,7 @@ SARA_ID = "121231235"
 TOM_ID = "121231236"
 LOCATION = {"stateCode": "NY", "zipCode": "11211"}
 REQ = {"memberId": MEMBER_ID}
-CONTRACT_UID = "CONTRACT-UID-JOHN-1001"
+CONTRACT_UID = "CONTRACT-UID-ALEX-1001"
 COVERAGE_KEY = "1J1U-20250101-20251231-MED-57AMFC"
 COV_START = "2025-01-01"
 COV_END = "2025-12-31"
@@ -214,16 +214,16 @@ class TestActivePlanMembers:
         enrollees = period["enrollees"]
         names = {e["name"]["given"] for e in enrollees}
 
-        assert "JOHN" in names
+        assert "ALEX" in names
         assert "SARA" in names
         assert "TOM" in names
 
-        # JOHN is subscriber
+        # ALEX is subscriber
         subscriber = next(
             e for e in enrollees if e["relationship"]["identifier"] == "SUBSCR"
         )
-        assert subscriber["name"]["given"] == "JOHN"
-        assert subscriber["name"]["family"] == "DOE"
+        assert subscriber["name"]["given"] == "ALEX"
+        assert subscriber["name"]["family"] == "RIVERA"
 
 
 class TestBillsOverview:
@@ -1582,7 +1582,7 @@ class TestFamilyClaimsOopAnalysis:
         brand_code = entry["brand"]["identifier"]
 
         enrollees = {e["personId"]: e["name"]["given"] for e in period["enrollees"]}
-        # Family: JOHN, SARA, TOM
+        # Family: ALEX, SARA, TOM
 
         # Step 2: aggregate patient responsibility across all family claims
         total_responsibility = {}
@@ -1593,7 +1593,7 @@ class TestFamilyClaimsOopAnalysis:
             )
             total_responsibility[given_name] = round(member_total, 2)
 
-        assert abs(total_responsibility.get("JOHN", 0) - 348.00) < 0.01
+        assert abs(total_responsibility.get("ALEX", 0) - 348.00) < 0.01
         assert abs(total_responsibility.get("SARA", 0) - 60.00) < 0.01
         assert abs(total_responsibility.get("TOM", 0) - 109.00) < 0.01
         family_total = sum(total_responsibility.values())

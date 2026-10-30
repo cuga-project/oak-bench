@@ -39,7 +39,6 @@ from oak_health.models import (
     PersonName,
     EnrollmentDates,
     RelationshipCd,
-    GenderCd,
     PlanInformationResponse,
     BenefitPeriod,
     ValueBasedProviderInfo,
@@ -186,11 +185,11 @@ def masked_providers() -> Tuple[ServiceEntity, ServiceEntity]:
     return servicing, billing
 
 
-def patient_john() -> PersonRecord:
+def patient_alex() -> PersonRecord:
     return PersonRecord(
         identity=PersonIdentity(primaryId="121231234", secondaryId="868Y10397"),
-        givenName="JOHN",
-        familyName="DOE",
+        givenName="ALEX",
+        familyName="RIVERA",
         birthDate="1970-02-13",
     )
 
@@ -199,7 +198,7 @@ def patient_alt() -> PersonRecord:
     return PersonRecord(
         identity=PersonIdentity(primaryId="882771300", secondaryId="441Z22001"),
         givenName="JANE",
-        familyName="DOE",
+        familyName="RIVERA",
         birthDate="1985-04-21",
     )
 
@@ -258,8 +257,8 @@ def build_claim(
 def seed_claims() -> List[ServiceRecord]:
     claims: List[ServiceRecord] = []
 
-    # Member 1 (JOHN)
-    john = patient_john()
+    # Member 1 (ALEX)
+    alex = patient_alex()
     claims.append(
         build_claim(
             clmUid="451F6F37F295390506B9CF9F6DFBC930",
@@ -270,7 +269,7 @@ def seed_claims() -> List[ServiceRecord]:
             end="2025-02-02",
             recv="2025-02-03",
             proc="2025-02-04",
-            patient=john,
+            patient=alex,
             amount=amt(allowed="10.00", paid="10.00", total="10.00", save="10.00"),
         )
     )
@@ -284,7 +283,7 @@ def seed_claims() -> List[ServiceRecord]:
             end="2025-01-31",
             recv="2025-02-03",
             proc="2025-02-04",
-            patient=john,
+            patient=alex,
             amount=amt(mbr="10.00", notcov="10.00", total="10.00", allowed="10.00"),
         )
     )
@@ -298,7 +297,7 @@ def seed_claims() -> List[ServiceRecord]:
             end="2025-07-05",
             recv="2025-07-06",
             proc="2025-07-06",
-            patient=john,
+            patient=alex,
             amount=amt(
                 allowed="200.00",
                 copay="20.00",
@@ -318,7 +317,7 @@ def seed_claims() -> List[ServiceRecord]:
             end="2025-01-20",
             recv="2025-01-21",
             proc="2025-01-22",
-            patient=john,
+            patient=alex,
             amount=amt(
                 allowed="75.00", paid="60.00", mbr="15.00", total="75.00", save="15.00"
             ),
@@ -334,7 +333,7 @@ def seed_claims() -> List[ServiceRecord]:
             end="2025-02-10",
             recv="2025-02-11",
             proc="2025-02-12",
-            patient=john,
+            patient=alex,
             amount=amt(
                 allowed="90.00", paid="72.00", mbr="18.00", total="90.00", save="18.00"
             ),
@@ -350,7 +349,7 @@ def seed_claims() -> List[ServiceRecord]:
             end="2025-02-12",
             recv="2025-02-13",
             proc="2025-02-14",
-            patient=john,
+            patient=alex,
             amount=amt(
                 allowed="150.00",
                 notcov="150.00",
@@ -370,7 +369,7 @@ def seed_claims() -> List[ServiceRecord]:
             end="2025-02-15",
             recv="2025-02-16",
             proc="2025-02-17",
-            patient=john,
+            patient=alex,
             amount=amt(
                 allowed="65.00", paid="50.00", mbr="15.00", total="65.00", save="15.00"
             ),
@@ -386,7 +385,7 @@ def seed_claims() -> List[ServiceRecord]:
             end="2025-02-20",
             recv="2025-02-21",
             proc="2025-02-21",
-            patient=john,
+            patient=alex,
             amount=amt(
                 allowed="210.00",
                 copay="25.00",
@@ -406,7 +405,7 @@ def seed_claims() -> List[ServiceRecord]:
             end="2025-02-25",
             recv="2025-02-26",
             proc="2025-02-27",
-            patient=john,
+            patient=alex,
             amount=amt(
                 allowed="40.00", paid="40.00", mbr="0.00", total="40.00", save="10.00"
             ),
@@ -422,7 +421,7 @@ def seed_claims() -> List[ServiceRecord]:
             end="2025-03-01",
             recv="2025-03-02",
             proc="2025-03-03",
-            patient=john,
+            patient=alex,
             amount=amt(
                 allowed="120.00",
                 paid="96.00",
@@ -442,7 +441,7 @@ def seed_claims() -> List[ServiceRecord]:
             end="2025-03-05",
             recv="2025-03-06",
             proc="2025-03-07",
-            patient=john,
+            patient=alex,
             amount=amt(
                 allowed="80.00", notcov="80.00", mbr="80.00", total="80.00", paid="0.00"
             ),
@@ -458,7 +457,7 @@ def seed_claims() -> List[ServiceRecord]:
             end="2025-03-10",
             recv="2025-03-11",
             proc="2025-03-12",
-            patient=john,
+            patient=alex,
             amount=amt(
                 allowed="55.00", paid="44.00", mbr="11.00", total="55.00", save="11.00"
             ),
@@ -467,18 +466,18 @@ def seed_claims() -> List[ServiceRecord]:
     # Dependent patients for claims context (share subscriber's hcId)
     sara_patient = PersonRecord(
         identity=PersonIdentity(
-            primaryId="121231235", secondaryId=john.identity.secondaryId
+            primaryId="121231235", secondaryId=alex.identity.secondaryId
         ),
         givenName="SARA",
-        familyName="DOE",
+        familyName="RIVERA",
         birthDate="2008-06-10",
     )
     tom_patient = PersonRecord(
         identity=PersonIdentity(
-            primaryId="121231236", secondaryId=john.identity.secondaryId
+            primaryId="121231236", secondaryId=alex.identity.secondaryId
         ),
         givenName="TOM",
-        familyName="DOE",
+        familyName="RIVERA",
         birthDate="2012-09-15",
     )
 
@@ -849,9 +848,6 @@ def _rel(code: str, name: str) -> RelationshipCd:
     return RelationshipCd(code=code, name=name, description=name)
 
 
-def _gender(code: str, name: str) -> GenderCd:
-    return GenderCd(code=code, name=name, description=name)
-
 
 def seed_eligibility_and_plans():
     """
@@ -866,15 +862,15 @@ def seed_eligibility_and_plans():
     PLAN_INFO_DB: Dict[tuple, PlanInformationResponse] = {}
     CONTRACT_UID_TO_CD: Dict[str, str] = {}
 
-    # ----- John -----
-    john = patient_john()
-    john_cov_key_2025 = "1J1U-20250101-20251231-MED-57AMFC"
-    john_cov_key_2024 = "1J1U-20240101-20241231-MED-OLDPPO"
-    COVERAGE_KEY_INDEX[john_cov_key_2025] = john.identity.primaryId
-    COVERAGE_KEY_INDEX[john_cov_key_2024] = john.identity.primaryId
+    # ----- Alex -----
+    alex = patient_alex()
+    alex_cov_key_2025 = "1J1U-20250101-20251231-MED-57AMFC"
+    alex_cov_key_2024 = "1J1U-20240101-20241231-MED-OLDPPO"
+    COVERAGE_KEY_INDEX[alex_cov_key_2025] = alex.identity.primaryId
+    COVERAGE_KEY_INDEX[alex_cov_key_2024] = alex.identity.primaryId
 
-    john_coverage_2025 = EnrollmentPeriod(
-        periodKey=john_cov_key_2025,
+    alex_coverage_2025 = EnrollmentPeriod(
+        periodKey=alex_cov_key_2025,
         dates=PeriodDates(start="2025-01-01", end="2025-12-31"),
         features=PeriodFeatures(
             salaryBasedLimit=False,  # maxOOPSalaryInd="N"
@@ -899,11 +895,11 @@ def seed_eligibility_and_plans():
         systemReference="BEN-SYS-01",
         enrollees=[
             EnrolledPerson(
-                personId=john.identity.primaryId,
+                personId=alex.identity.primaryId,
                 name=PersonName(
-                    given=john.givenName, middle=None, family=john.familyName
+                    given=alex.givenName, middle=None, family=alex.familyName
                 ),
-                birthDate=john.birthDate,
+                birthDate=alex.birthDate,
                 relationship=MetadataTriple(
                     identifier="SUBSCR", label="Subscriber", details="Subscriber"
                 ),
@@ -915,12 +911,11 @@ def seed_eligibility_and_plans():
                     MetadataTriple(identifier="MED", label="Medical", details="Medical")
                 ],
                 sequenceNumber="01",
-                primaryAccountId=john.identity.secondaryId,
-                gender=MetadataTriple(identifier="M", label="Male", details="Male"),
+                primaryAccountId=alex.identity.secondaryId,
             ),
             EnrolledPerson(
                 personId="121231235",
-                name=PersonName(given="SARA", middle=None, family="DOE"),
+                name=PersonName(given="SARA", middle=None, family="RIVERA"),
                 birthDate="2008-06-10",
                 relationship=MetadataTriple(
                     identifier="CHILD", label="Child", details="Child"
@@ -933,12 +928,11 @@ def seed_eligibility_and_plans():
                     MetadataTriple(identifier="MED", label="Medical", details="Medical")
                 ],
                 sequenceNumber="02",
-                primaryAccountId=john.identity.secondaryId,
-                gender=MetadataTriple(identifier="F", label="Female", details="Female"),
+                primaryAccountId=alex.identity.secondaryId,
             ),
             EnrolledPerson(
                 personId="121231236",
-                name=PersonName(given="TOM", middle=None, family="DOE"),
+                name=PersonName(given="TOM", middle=None, family="RIVERA"),
                 birthDate="2012-09-15",
                 relationship=MetadataTriple(
                     identifier="CHILD", label="Child", details="Child"
@@ -951,8 +945,7 @@ def seed_eligibility_and_plans():
                     MetadataTriple(identifier="MED", label="Medical", details="Medical")
                 ],
                 sequenceNumber="03",
-                primaryAccountId=john.identity.secondaryId,
-                gender=MetadataTriple(identifier="M", label="Male", details="Male"),
+                primaryAccountId=alex.identity.secondaryId,
             ),
         ],
         benefitCycle="CY",
@@ -961,8 +954,8 @@ def seed_eligibility_and_plans():
         ),
     )
 
-    john_coverage_2024 = EnrollmentPeriod(
-        periodKey=john_cov_key_2024,
+    alex_coverage_2024 = EnrollmentPeriod(
+        periodKey=alex_cov_key_2024,
         dates=PeriodDates(start="2024-01-01", end="2024-12-31"),
         features=PeriodFeatures(
             salaryBasedLimit=False, enhancedProgram=False, dependentEligible=True
@@ -985,11 +978,11 @@ def seed_eligibility_and_plans():
         systemReference="BEN-SYS-00",
         enrollees=[
             EnrolledPerson(
-                personId=john.identity.primaryId,
+                personId=alex.identity.primaryId,
                 name=PersonName(
-                    given=john.givenName, middle=None, family=john.familyName
+                    given=alex.givenName, middle=None, family=alex.familyName
                 ),
-                birthDate=john.birthDate,
+                birthDate=alex.birthDate,
                 relationship=MetadataTriple(
                     identifier="SUBSCR", label="Subscriber", details="Subscriber"
                 ),
@@ -1003,13 +996,12 @@ def seed_eligibility_and_plans():
                     MetadataTriple(identifier="MED", label="Medical", details="Medical")
                 ],
                 sequenceNumber="01",
-                primaryAccountId=john.identity.secondaryId,
-                gender=MetadataTriple(identifier="M", label="Male", details="Male"),
+                primaryAccountId=alex.identity.secondaryId,
             ),
             EnrolledPerson(
                 personId="121231233",
-                name=PersonName(given="Jenny", middle=None, family=john.familyName),
-                birthDate=john.birthDate,
+                name=PersonName(given="Jenny", middle=None, family=alex.familyName),
+                birthDate=alex.birthDate,
                 relationship=MetadataTriple(
                     identifier="SPOU", label="Spouse", details="Spouse"
                 ),
@@ -1023,8 +1015,7 @@ def seed_eligibility_and_plans():
                     MetadataTriple(identifier="MED", label="Medical", details="Medical")
                 ],
                 sequenceNumber="01",
-                primaryAccountId=john.identity.secondaryId,
-                gender=MetadataTriple(identifier="F", label="Female", details="Female"),
+                primaryAccountId=alex.identity.secondaryId,
             ),
         ],
         benefitCycle="CY",
@@ -1033,11 +1024,11 @@ def seed_eligibility_and_plans():
         ),
     )
 
-    john_elig = ContractRecord(
+    alex_elig = ContractRecord(
         identifiers=ContractIdentifiers(
-            accountId=john.identity.secondaryId,
+            accountId=alex.identity.secondaryId,
             contractNumber="CNTR-1001",
-            contractUniqueId="CONTRACT-UID-JOHN-1001",
+            contractUniqueId="CONTRACT-UID-ALEX-1001",
         ),
         group=GroupInfo(groupId="GRP-ACME", groupName="Acme Corp"),
         effectiveDate="2024-01-01",
@@ -1048,13 +1039,13 @@ def seed_eligibility_and_plans():
             identifier="ACME", label="ACME HEALTH", details="ACME HEALTH"
         ),
         sourceSystem="ELIGSYS",
-        periods=[john_coverage_2024, john_coverage_2025],
+        periods=[alex_coverage_2024, alex_coverage_2025],
     )
-    ELIGIBILITY_DB[john.identity.primaryId] = CoveragePeriodResponse(
-        eligibility=[john_elig]
+    ELIGIBILITY_DB[alex.identity.primaryId] = CoveragePeriodResponse(
+        eligibility=[alex_elig]
     )
-    ELIGIBILITY_DB[john.identity.secondaryId] = ELIGIBILITY_DB[john.identity.primaryId]
-    CONTRACT_UID_TO_CD["CONTRACT-UID-JOHN-1001"] = "1J1U"
+    ELIGIBILITY_DB[alex.identity.secondaryId] = ELIGIBILITY_DB[alex.identity.primaryId]
+    CONTRACT_UID_TO_CD["CONTRACT-UID-ALEX-1001"] = "1J1U"
 
     # ----- JANE -----
     jane = patient_alt()
@@ -1102,7 +1093,6 @@ def seed_eligibility_and_plans():
                 ],
                 sequenceNumber="01",
                 primaryAccountId=jane.identity.secondaryId,
-                gender=MetadataTriple(identifier="F", label="Female", details="Female"),
             )
         ],
         benefitCycle="CY",
@@ -1136,8 +1126,8 @@ def seed_eligibility_and_plans():
 
     # ----- Plan Information -----
 
-    # JOHN 2025
-    PLAN_INFO_DB[(john_cov_key_2025, "MED")] = PlanInformationResponse(
+    # ALEX 2025
+    PLAN_INFO_DB[(alex_cov_key_2025, "MED")] = PlanInformationResponse(
         contractCd="1J1U",
         contractState="CA",
         startDt="2025-01-01",
@@ -1350,8 +1340,8 @@ def seed_eligibility_and_plans():
         ],
     )
 
-    # JOHN 2024
-    PLAN_INFO_DB[(john_cov_key_2024, "MED")] = PlanInformationResponse(
+    # ALEX 2024
+    PLAN_INFO_DB[(alex_cov_key_2024, "MED")] = PlanInformationResponse(
         contractCd="1J1U",
         contractState="NY",
         startDt="2024-01-01",
@@ -1875,7 +1865,7 @@ def _plan_level_inn_copay_coins(
 # BENEFIT_DETAILS_DB key: (contract_uid, benefit_sys_id)
 BENEFIT_DETAILS_DB: Dict[tuple, Dict] = {
     # Emergency Room (Institutional)
-    ("CONTRACT-UID-JOHN-1001", "82da10ab-c05d-46e1-bf48-ad61ea70eb3d"): {
+    ("CONTRACT-UID-ALEX-1001", "82da10ab-c05d-46e1-bf48-ad61ea70eb3d"): {
         "serviceCategory": [
             ServiceCategoryDetails(
                 planType="Medical",
@@ -1945,7 +1935,7 @@ BENEFIT_DETAILS_DB: Dict[tuple, Dict] = {
         ],
     },
     # Office Visits - PCP
-    ("CONTRACT-UID-JOHN-1001", "pcp-ov-11"): {
+    ("CONTRACT-UID-ALEX-1001", "pcp-ov-11"): {
         "serviceCategory": [
             ServiceCategoryDetails(
                 planType="Medical",
@@ -1999,7 +1989,7 @@ BENEFIT_DETAILS_DB: Dict[tuple, Dict] = {
         ],
     },
     # Office Visits - Specialist
-    ("CONTRACT-UID-JOHN-1001", "spec-ov-11"): {
+    ("CONTRACT-UID-ALEX-1001", "spec-ov-11"): {
         "serviceCategory": [
             ServiceCategoryDetails(
                 planType="Medical",
@@ -2053,7 +2043,7 @@ BENEFIT_DETAILS_DB: Dict[tuple, Dict] = {
         ],
     },
     # MRI
-    ("CONTRACT-UID-JOHN-1001", "mri-IMG-OP"): {
+    ("CONTRACT-UID-ALEX-1001", "mri-IMG-OP"): {
         "serviceCategory": [
             ServiceCategoryDetails(
                 planType="Medical",
@@ -2130,7 +2120,7 @@ BENEFIT_DETAILS_DB: Dict[tuple, Dict] = {
         ],
     },
     # Knee Surgery (Outpatient)
-    ("CONTRACT-UID-JOHN-1001", "knee-surg-op"): {
+    ("CONTRACT-UID-ALEX-1001", "knee-surg-op"): {
         "serviceCategory": [
             ServiceCategoryDetails(
                 planType="Medical",
@@ -2219,7 +2209,7 @@ for _sys in [
 ]:
     if ("CONTRACT-UID-JANE-2002", _sys) not in BENEFIT_DETAILS_DB:
         BENEFIT_DETAILS_DB[("CONTRACT-UID-JANE-2002", _sys)] = BENEFIT_DETAILS_DB[
-            ("CONTRACT-UID-JOHN-1001", _sys)
+            ("CONTRACT-UID-ALEX-1001", _sys)
         ]
 
 # ============ Provider Directory ============
@@ -3180,7 +3170,7 @@ MEDICAL_KB = {
 # ===== Billing ledger (by clmUid) =====
 # status: DUE | PAID | PARTIAL | IN_COLLECTIONS
 BILLING_LEDGER: Dict[str, Dict[str, str]] = {
-    # Some JOHN claims
+    # Some ALEX claims
     "63FA69DB119C2E16E21B487BC411E1F2": {
         "status": "DUE",
         "dueAmt": "10.00",
@@ -3229,7 +3219,7 @@ PAYMENT_INTENTS: Dict[str, Dict[str, str]] = {
 
 # ===== Accumulators (by coverageKey) =====
 ACCUMULATORS_DB: Dict[str, List[AccumulatorEntry]] = {
-    # JOHN 2025 PPO
+    # ALEX 2025 PPO
     "1J1U-20250101-20251231-MED-57AMFC": [
         AccumulatorEntry(
             category="DED",
@@ -3294,7 +3284,7 @@ ACCUMULATORS_DB: Dict[str, List[AccumulatorEntry]] = {
 MEMBER_PREFERENCES: Dict[str, MemberPreferences] = {
     "121231234": MemberPreferences(
         language="en-us", emailOptIn=True, smsOptIn=False, accessibility="True"
-    ),  # JOHN
+    ),  # ALEX
     "882771300": MemberPreferences(
         language="en-us", emailOptIn=False, smsOptIn=True, accessibility="large_text"
     ),  # JANE
@@ -3309,12 +3299,12 @@ MEMBER_PREFERENCES: Dict[str, MemberPreferences] = {
 # Default home location per member (stateCode + zipCode).
 # Used by find_care_* endpoints as a fallback when no location is supplied in the request body.
 MEMBER_DEFAULT_LOCATIONS: Dict[str, Dict[str, str]] = {
-    "121231234": {"stateCode": "NY", "zipCode": "11211"},  # JOHN DOE
-    "121231235": {"stateCode": "NY", "zipCode": "11211"},  # SARA DOE (same household)
-    "121231236": {"stateCode": "NY", "zipCode": "11211"},  # TOM DOE (same household)
-    "121231233": {"stateCode": "NY", "zipCode": "11211"},  # JENNY DOE (spouse)
+    "121231234": {"stateCode": "NY", "zipCode": "11211"},  # ALEX RIVERA
+    "121231235": {"stateCode": "NY", "zipCode": "11211"},  # SARA RIVERA (same household)
+    "121231236": {"stateCode": "NY", "zipCode": "11211"},  # TOM RIVERA (same household)
+    "121231233": {"stateCode": "NY", "zipCode": "11211"},  # JENNY RIVERA (spouse)
     "882771300": {"stateCode": "MA", "zipCode": "02108"},  # JANE SMITH (Boston)
-    "868Y10397": {"stateCode": "NY", "zipCode": "11211"},  # JOHN by accountId
+    "868Y10397": {"stateCode": "NY", "zipCode": "11211"},  # ALEX by accountId
 }
 
 # Global DBs (exports)

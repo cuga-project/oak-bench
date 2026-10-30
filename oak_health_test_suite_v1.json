@@ -122,7 +122,7 @@
         "intent": "Why was claim id 2025034AA5007 denied? Also, show me its details",
         "difficulty": "easy",
         "expected_output": {
-          "response": "The claim with ID 2025034AA5007 was denied. Common reasons are that the claim was received twice, or the service performed is not covered under your plan.\n\nHere are the details for claim 2025034AA5007:\n\nClaim UID: 9C0C8D7A6B5A4899BC12EF3344CDA456\nClaim Reference ID: REF9C0C8D7A6B5A4899BC12EF3344CDA456\nClaim Class: Medical Claim\nClaim Type: Professional Claim\nStatus: Denied\nClaim Start Date: 2025-03-05\nClaim End Date: 2025-03-05\nReceived Date: 2025-03-06\nProcessed Date: 2025-03-07\nPatient: JOHN DOE (DOB: 1970-02-13)\nAmounts:\nAllowed Amount: $80.00\nMember Responsibility: $80.00\nNot Covered Amount: $80.00\nPaid Amount: $0.00\nTotal Charge Amount: $80.00\nProcedure Code: 99213\nDiagnosis Code: Z00.00",
+          "response": "The claim with ID 2025034AA5007 was denied. Common reasons are that the claim was received twice, or the service performed is not covered under your plan.\n\nHere are the details for claim 2025034AA5007:\n\nClaim UID: 9C0C8D7A6B5A4899BC12EF3344CDA456\nClaim Reference ID: REF9C0C8D7A6B5A4899BC12EF3344CDA456\nClaim Class: Medical Claim\nClaim Type: Professional Claim\nStatus: Denied\nClaim Start Date: 2025-03-05\nClaim End Date: 2025-03-05\nReceived Date: 2025-03-06\nProcessed Date: 2025-03-07\nPatient: ALEX RIVERA (DOB: 1970-02-13)\nAmounts:\nAllowed Amount: $80.00\nMember Responsibility: $80.00\nNot Covered Amount: $80.00\nPaid Amount: $0.00\nTotal Charge Amount: $80.00\nProcedure Code: 99213\nDiagnosis Code: Z00.00",
           "keywords": [
             "twice",
             "not covered"
@@ -166,12 +166,12 @@
         "intent": "Show my active plan details, dates, and covered members",
         "difficulty": "medium",
         "expected_output": {
-          "response": "Your active plan is \"Acme Standard PPO\" (coverage period: 2025-01-01 to 2025-12-31).\n\nCovered members:\n\nJOHN DOE (Subscriber, DOB: 1970-02-13)\nSARA DOE (Child, DOB: 2008-06-10)\nTOM DOE (Child, DOB: 2012-09-15)",
+          "response": "Your active plan is \"Acme Standard PPO\" (coverage period: 2025-01-01 to 2025-12-31).\n\nCovered members:\n\nALEX RIVERA (Subscriber, DOB: 1970-02-13)\nSARA RIVERA (Child, DOB: 2008-06-10)\nTOM RIVERA (Child, DOB: 2012-09-15)",
           "keywords": [
             "2025",
-            "JOHN DOE|JOHN|DOE",
-            "SARA DOE|SARA|DOE",
-            "TOM DOE|TOM|DOE"
+            "ALEX RIVERA|ALEX|RIVERA",
+            "SARA RIVERA|SARA|RIVERA",
+            "TOM RIVERA|TOM|RIVERA"
           ],
           "tool_calls": [
             {
@@ -546,7 +546,7 @@
         "intent": "Show my dependents, how many claims are under their names?",
         "difficulty": "medium",
         "expected_output": {
-          "response": "Here are your dependents and the number of claims under their names:\n\nSARA DOE (2008-06-10): 2 claims\nTOM DOE (2012-09-15): 2 claims",
+          "response": "Here are your dependents and the number of claims under their names:\n\nSARA RIVERA (2008-06-10): 2 claims\nTOM RIVERA (2012-09-15): 2 claims",
           "keywords": [
             "Sara",
             "Tom"
@@ -626,7 +626,7 @@
         "intent": "Turn on SMS notifications and set language to en-uk. Also show my member profile",
         "difficulty": "easy",
         "expected_output": {
-          "response": "SMS notifications are now turned on and your language preference is set to en-uk.\n\nHere is your member profile:\n\nName: JOHN DOE\nDate of Birth: 1970-02-13\nMember UID: 375491185\nHealth Coverage ID: 868Y10397\nRelationship: SUBSCR (Subscriber)\nLanguage Preference: en-uk\nEmail Opt-In: True\nSMS Opt-In: True\nAccessibility: None\nPrimary Care Provider ID: PRV-0106",
+          "response": "SMS notifications are now turned on and your language preference is set to en-uk.\n\nHere is your member profile:\n\nName: ALEX RIVERA\nDate of Birth: 1970-02-13\nMember UID: 375491185\nHealth Coverage ID: 868Y10397\nRelationship: SUBSCR (Subscriber)\nLanguage Preference: en-uk\nEmail Opt-In: True\nSMS Opt-In: True\nAccessibility: None\nPrimary Care Provider ID: PRV-0106",
           "keywords": [
             "Language: en-uk|Language: en‑uk|en-uk|en‑uk|Language Preference: en-uk",
             "SMS notifications: turned on|SMS notifications: turned on (SMS Opt‑In: True)|SMS Opt-In: True|SMS notifications: Enabled|SMS notifications: **Enabled**",
@@ -1060,7 +1060,7 @@
         "intent": "My family has had a lot of healthcare visits this year. Tell me: (1) the total out-of-pocket responsibility my entire family (me and my two children) incurred across all claims this year, broken down per member; (2) how that compares to our family in-network deductible and OOP accumulator progress; (3) would switching to the Oak HDHP actually save us money given its deductible structure; and (4) find primary care doctors near me who accept new patients for Tom's follow-up care.",
         "difficulty": "hard",
         "expected_output": {
-          "response": "Family 2025 member responsibility from claims:\n\nJOHN DOE: $348.00\nSARA DOE: $60.00\nTOM DOE: $109.00\nFamily total: $517.00\n\nNote: Denied claim amounts where the service was not covered (e.g., claim AA5002: $150, AA5007: $80) are included in the patientShare totals above but do NOT count toward your OOP accumulator — non-covered amounts are excluded from OOP tracking.\n\nCurrent family in-network accumulator progress (official plan-year tracking):\nFamily Deductible: $700 met of $3,000 limit\nFamily Out-of-Pocket: $1,200 met of $6,000 limit\n\nOak HDHP analysis for a family:\nThe HDHP has the lowest premium ($820/mo family), but uses an AGGREGATE $3,200 family deductible. This means no family member receives post-deductible coverage until ALL family members' expenses collectively reach $3,200 — unlike your current PPO's embedded structure where each member's deductible is tracked independently. With 3 active family members each filing multiple claims, the aggregate structure is a significant financial risk.\n\nPrimary care doctors near you accepting new patients:\nNoah Sullivan — Greenpoint Family Practice, 101 Green Ave, Brooklyn, NY 11222\nAva Thompson — Bedford Primary Care, 202 Bedford Ave, Brooklyn, NY 11249\nLucas Parker — Williamsburg Family Medicine, 120 Havemeyer St, Brooklyn, NY 11211\nCharlotte Reed — Park Slope Primary Care, 400 7th Ave, Brooklyn, NY 11215\nJames Foster — Prospect Heights Family Care, 55 Vanderbilt Ave, Brooklyn, NY 11238",
+          "response": "Family 2025 member responsibility from claims:\n\nALEX RIVERA: $348.00\nSARA RIVERA: $60.00\nTOM RIVERA: $109.00\nFamily total: $517.00\n\nNote: Denied claim amounts where the service was not covered (e.g., claim AA5002: $150, AA5007: $80) are included in the patientShare totals above but do NOT count toward your OOP accumulator — non-covered amounts are excluded from OOP tracking.\n\nCurrent family in-network accumulator progress (official plan-year tracking):\nFamily Deductible: $700 met of $3,000 limit\nFamily Out-of-Pocket: $1,200 met of $6,000 limit\n\nOak HDHP analysis for a family:\nThe HDHP has the lowest premium ($820/mo family), but uses an AGGREGATE $3,200 family deductible. This means no family member receives post-deductible coverage until ALL family members' expenses collectively reach $3,200 — unlike your current PPO's embedded structure where each member's deductible is tracked independently. With 3 active family members each filing multiple claims, the aggregate structure is a significant financial risk.\n\nPrimary care doctors near you accepting new patients:\nNoah Sullivan — Greenpoint Family Practice, 101 Green Ave, Brooklyn, NY 11222\nAva Thompson — Bedford Primary Care, 202 Bedford Ave, Brooklyn, NY 11249\nLucas Parker — Williamsburg Family Medicine, 120 Havemeyer St, Brooklyn, NY 11211\nCharlotte Reed — Park Slope Primary Care, 400 7th Ave, Brooklyn, NY 11215\nJames Foster — Prospect Heights Family Care, 55 Vanderbilt Ave, Brooklyn, NY 11238",
           "keywords": [
             "517|$517",
             "348|$348",

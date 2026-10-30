@@ -48,7 +48,7 @@ def john_coverage_key_2025():
 
 @pytest.fixture
 def john_contract_uid():
-    return "CONTRACT-UID-JOHN-1001"
+    return "CONTRACT-UID-ALEX-1001"
 
 
 ALL_PLAN_IDS = [
@@ -285,7 +285,7 @@ class TestMedium:
     def test_m1_member_plan_vs_catalog(self, client, john_member_id):
         """
         M1: Agent chain — get member's current plan → compare against catalog.
-        John's coverage_key encodes PPO. We can then look up catalog PPO plans
+        Alex's coverage_key encodes PPO. We can then look up catalog PPO plans
         and compare OOP max values.
         """
         # Step 1: get member coverage to learn their plan type
@@ -295,7 +295,7 @@ class TestMedium:
         assert coverage_resp.status_code == 200
         periods = coverage_resp.json()["eligibility"][0]["periods"]
         active = next(p for p in periods if p["status"]["identifier"] == "A")
-        # John's active plan is a PPO (arrangement identifier == "PPO")
+        # Alex's active plan is a PPO (arrangement identifier == "PPO")
         assert active["arrangement"]["identifier"] == "PPO"
 
         # Step 2: list catalog PPO plans
@@ -354,7 +354,7 @@ class TestMedium:
     def test_m3_plan_bridge_field_for_find_care(self, client, john_member_id):
         """
         M3: Use plan's networkBrandCode to call find_care_specialty.
-        Premier PPO network brand is ACME — same as John's coverage.
+        Premier PPO network brand is ACME — same as Alex's coverage.
         """
         # Get Premier plan to extract brand code
         plan_resp = client.get("/plans/OAK-PPO-PREMIER-2025")
@@ -365,7 +365,7 @@ class TestMedium:
         # Use brand_code + john's contract_uid to find PCP providers
         find_resp = client.post(
             "/find_care_specialty"
-            "?contract_uid=CONTRACT-UID-JOHN-1001"
+            "?contract_uid=CONTRACT-UID-ALEX-1001"
             f"&brand_code={brand_code}"
             "&specialty_category_codes=25"
             "&stateCode=NY&zipCode=11211",
@@ -379,11 +379,11 @@ class TestMedium:
         self, client, john_member_id, john_coverage_key_2025
     ):
         """
-        M4: Compare John's current deductible progress against a potential new plan.
-        John has met $250 of his $1,000 INN deductible (from accumulators).
+        M4: Compare Alex's current deductible progress against a potential new plan.
+        Alex has met $250 of their $1,000 INN deductible (from accumulators).
         If he switched to Premier PPO ($500 deductible), he'd start over at $0.
         """
-        # Step 1: get John's current accumulators
+        # Step 1: get Alex's current accumulators
         acc_resp = client.post(
             "/get_benefit_accumulators",
             params={"coverage_key": john_coverage_key_2025},
@@ -407,7 +407,7 @@ class TestMedium:
         new_ded_str = plan_resp.json()["plan"]["innCoverage"]["individualDeductible"]
         new_ded = float(new_ded_str.replace("$", "").replace(",", ""))  # 500.00
         # Premier deductible ($500) < current plan max ($1,000) —
-        # but John has ALREADY met $250, leaving only $750 on current plan.
+        # but Alex has ALREADY met $250, leaving only $750 on current plan.
         # Switching resets to $500 — a loss of the $250 already counted.
         assert new_ded < current_max
         assert accumulated > 0  # progress that would be lost on switch
